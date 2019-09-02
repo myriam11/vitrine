@@ -1,0 +1,230 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- obligatoire pour précisre le jeu de caractère -->
+    <meta charset="UTF-8">
+    <!-- obligatoire pour que la page soit responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- EDGE VA BIENTOT MOURIR -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- très important pour le référencement -->
+    <title>BM Coiffure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <style>
+/* ICI ON PEUT ECRIRE DU CODE CSS */
+/* RESET CSS */
+html, body {
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:1.3em;
+    background-color: #9400ea;
+    color:#000000;
+    width:100%;
+    height:100%;
+}
+* {
+    box-sizing: border-box;
+    margin-block: 2em;
+} 
+h1 {
+    text-align: center;
+    color:#ffffff;
+    margin-top:2rem;
+}
+h3 {
+    text-align: center;
+    text-decoration-color: #9400ea;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width:50%;
+    min-width:360px;
+    flex-direction: row row-reverse;
+    
+}
+form > * {
+    font-size:1rem;
+    padding:0.25rem;
+    margin:0.2rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+button {
+    max-width:50%;
+}
+.container img {
+    width:180px;
+    height:180px;
+    object-fit: contain;
+}
+.grande-image img {
+    width:100%;
+    height:400px;
+    object-fit: cover;
+} 
+/*CODE POUR LIGHTBOX */
+.grande-image {
+    position:fixed;
+    top:-2000px;
+    left:0;
+    background-color: rgba(0,0,0,0.5);
+    width:100%;
+    height:100%;
+    padding:4rem;
+    display:block;
+    z-index:-1;
+    opacity:0;
+    transition:all 1s;
+    width:100%;
+    height:100%;
+}
+/* LA BALISE DOIT AVOIR LES 2 CLASSES POUR ETRE SELECTIONNEE */
+.grande-image.montrer {
+    display:block;
+    opacity:1;
+    z-index:99;
+    width:100%;
+    height:100%;
+    left:0px;
+    top:0;
+}
+
+
+nav li{
+    display:inline;
+    padding-right:25px;
+    color:#FFFFFF;
+    font-family: 'Comfortaa', cursive;
+  
+    }
+  
+  
+nav{
+   position: fixed;
+  z-index: 99;
+     top:0;
+    width:100%;
+    height:60px;
+    font-weight: bold;
+    color:#FFFFFF;
+    background-color: #000000;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    color:#FFFFFF;
+    }
+
+footer {
+    background-color: #000000;
+    color:white;
+    padding-bottom: 2em;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BM Coiffure</h1>
+
+
+        <nav>
+                <ul>
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="galerie.php">Galerie</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                </ul>
+            </nav>
+        
+    </header>
+    <main>
+        <section>
+            <h3>Formulaire de newsletter</h3>
+            <form method="GET" action="url-traitement.php">
+                <!-- formulaire newsletter -->
+                <!-- nom et email du visiteur -->
+                <label for="nom">Nom</label>
+                <input type="text" placeholder="entrez votre nom" name="nom" required id="nom">
+                <label for="email">Email</label>
+                <input type="email" placeholder="entrez votre email" name="email" required id="email">
+                <button type="submit">Inscription à la newsletter</button>
+            </form>
+        </section>
+        <section>
+            <h3>Galerie</h3>
+            <div class="container">
+                <img src="image/photo1.jpg" alt="photo1">
+                <img src="image/photo2.jpg" alt="photo2">
+                <img src="image/photo3.jpg" alt="photo3">
+                <img src="image/photo4.jpg" alt="photo4">
+                <img src="image/photo5.jpg" alt="photo5">
+                <img src="image/photo6.jpeg" alt="photo6">
+                <img src="image/photo7.jpg" alt="photo7">
+                <img src="image/photo8.jpg" alt="photo8">
+                
+
+            </div>
+            <div class="grande-image">
+                    <img src="image/photo1.jpg" alt="photo1">
+            </div>
+        </section>
+        <section>
+            <h3>Formulaire de contact</h3>
+            <form method="GET" action="url-traitement.php">
+                    <!-- formulaire contact -->
+                    <!-- nom, email et message du visiteur -->
+                    <label for="contact-nom">Nom</label>
+                    <input type="text" placeholder="entrez votre nom" name="nom" required id="contact-nom">
+                    <label for="contact-email">Email</label>
+                    <input type="email" placeholder="entrez votre email" name="email" required id="contact-email">
+                    <label for="contact-message">Message</label>
+                    <textarea name="contact-message" id="contact-message" placeholder="entrez votre message" cols="80" rows="6" required></textarea>
+                    <button type="submit">Envoyer le message</button>
+                </form>
+            </section>
+    </main>
+    <footer>
+        <p>tous droits réservés - &copy;2019</p>
+    </footer>
+    <script>
+/* ICI ON ECRIT DU CODE JS */
+/*
+QUAND ON CLIQUE SUR UNE PHOTO MINIATURE
+ON VEUT QUE L'IMAGE EN GRAND CHANGE POUR LA PHOTO CLIQUEE
+ETAPE1: IL FAUT SELECTIONNER TOUTES LES PHOTOS MINIATURES
+ETAPE2: IL FAUT AJOUTER UN EVENT LISTENER SUR CHAQUE MINIATURE
+*/
+/* objet.methode(param1, param2) */        
+var listePhoto = document.querySelectorAll(".container img");
+listePhoto.forEach((image) => {
+    // pour chaque image
+    image.addEventListener("click", function () {
+        // IL FAUT SELECTIONNER LA PHOTO EN GRAND
+        var photoGrand = document.querySelector(".grande-image img");
+        // CHANGER L'ATTRIBUT src POUR CHANGER L'IMAGE AFFICHEE
+        // this EST UNE VARIABLE QUI CONTIENT LA BALISE SUR LAQUELLE LE VISITEUR A CLIQUE
+        photoGrand.src = this.src;
+        // DEBUG
+        console.log(this);
+        // IL FAUT AFFICHER LA LIGHTBOX
+        var lightBox = document.querySelector(".grande-image");
+        // IL FAUT CHANGER LE display A block
+        // lightBox.style.display = 'block';
+        // IL FAUT AJOUTER LA CLASSE montrer A LA BALISE
+        lightBox.classList.add('montrer');
+    });
+});
+// IL FAUT POUVOIR CACHER LA LIGHTBOX SI ON CLIQUE DESSUS
+var lightBox = document.querySelector(".grande-image");
+lightBox.addEventListener('click', function() {
+    // IL FAUT CACHER LA LIGHTBOX
+    lightBox.classList.remove('montrer');
+});
+    </script>
+</body>
+</html>
+
+
